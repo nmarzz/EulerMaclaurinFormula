@@ -16,7 +16,7 @@ Most of this derivation is setup, so let's begin.
 
 The first few Bernoulli numbers are
 
-$B_0 = 1, B_1 = -\frac{1}{2}, B_2 = \frac{1}{6}, B_4 = \frac{-1}{30},B_6=\frac{1}{42},B_8=\frac{-1}{30},B_{10}=\frac{5}{66}$ 
+$B_0 = 1, B_1 = -\frac{1}{2}, B_2 = \frac{1}{6}, B_3 = 0,B_4 = \frac{-1}{30},B_5 = 0,B_6=\frac{1}{42},B_7 = 0,B_8=\frac{-1}{30},B_9 = 0,B_{10}=\frac{5}{66}$ 
 
 The odd $b_i$ are zero for $i \neq 1$ . At first glance these numbers seem pretty unpredictable. However, they are given by the coefficients of the following power series expansion
 $$
@@ -72,7 +72,7 @@ $$
 
 If we take $g$ to be the exponential function we get an important result so we name this result. 
 $$
-E := exp(D) = \sum_{n=0}^\infty \frac{D^n}{n!}
+E := \exp(D) = \sum_{n=0}^\infty \frac{D^n}{n!}
 $$
 And applying $E$ to $f$
 $$
@@ -128,9 +128,13 @@ Using this powerful lemma we can now derive the Euler-Maclaurin formula easily.
 
 ##### Theorem
 
-** Formally state the theorem, just to remind people what it is.** 
+Let $f$ be continuous, infinitely differentiable on $[a,b]$ then the relationship between $\int_a^b f(x)dx$ and the sum $\sum_{n=a}^b f(n)$ is given by 
+$$
+\sum_{n = a}^b f(n) = \int_{a}^b f(x)dx + \frac{f(b) + f(a)}{2} + \sum_{n=2}^\infty \frac{B_n}{n!} \left[ \frac{d^{n-1} f(x)}{dx^{n-1}} \Big|_b  - \frac{d^{n-1} f(x)}{dx^{n-1}} \Big|_a \right]
+$$
 
 
+##### Proof
 
 This version of the formula is the most useful version. 
 
@@ -156,12 +160,25 @@ $$
 -\int_{a}^b f(x)dx = -\sum_{n = a}^b f(n) + \frac{f(b) + f(a)}{2} + \sum_{n=2}^\infty \frac{B_n}{n!} \left[ \frac{d^{n-1} f(x)}{dx^{n-1}} \Big|_b  - \frac{d^{n-1} f(x)}{dx^{n-1}} \Big|_a \right]
 $$
 
+Hiding in this formula is something that is probably familiar. If we clean up the above a little and ignore that infinite sum on the right we get... the trapezoid rule! Simple enough to be familiar to most intro calc. students.
+$$
+\begin{split}
+-\int_{a}^b f(x)dx & = -\sum_{n = a}^b f(n) + \frac{f(b) + f(a)}{2}
+\\
+& \iff
+\\
+\int_{a}^b f(x)dx & = \sum_{n = a}^b f(n) + \frac{f(a) + f(b)}{2}
+\\
+&= \frac{f(a)}{2} + f(a+1) + ...+f(b-1) + \frac{f(b)}{2}
+\end{split}
+$$
+
 
 Now, it might appear that we have just traded a finite sum for an infinite one. On top of that we now also have to compute Bernoulli numbers and derivatives and an integral. However, the Euler-Maclaurin formula really is useful. Most famously, Euler used it to guess at the solution of 
 $$
 \sum_{n=1}^\infty \frac{1}{n} = \frac{\pi^2}{6}
 $$
-The E-M formula made him confident that the sum really did equal $\pi/6$ and he went on to prove it shortly after. In the following sections, I'll look at the error if we decide to truncate the sum on the RHS and explore a few applications and examples.
+The EM formula solidified Euler's intuition  that the sum really did equal $\pi/6$ and he went on to prove it shortly after. In the following sections, we'll briefly look at the error if we decide to truncate the sum on the RHS and explore a few applications and examples.
 
 ## Error
 
@@ -279,3 +296,5 @@ The code is available on my [Github](https://github.com/nmarzz/EulerMaclaurinFor
 Mahajan, S., & Carver, A. M. (2010). *Street-fighting mathematics: The art of educated guessing and opportunistic problem 	solving*. Cambridge, MA: MIT Press.
 
 Victor Kač, (2005) *18.704 Seminar in Algebra and Number Theory*. http://people.csail.mit.edu/kuat/courses/euler-maclaurin.pdf
+
+Mathologer, (2019), Youtube, https://www.youtube.com/watch?v=fw1kRz83Fj0&ab_channel=Mathologer
